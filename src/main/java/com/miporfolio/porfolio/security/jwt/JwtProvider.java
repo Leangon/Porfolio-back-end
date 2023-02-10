@@ -1,11 +1,8 @@
 package com.miporfolio.porfolio.security.jwt;
 
 import com.miporfolio.porfolio.security.entity.UsuarioPrincipal;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
+
 import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +49,7 @@ public class JwtProvider {
             logger.error("token expirado");
         }catch (IllegalArgumentException exception){
             logger.error("token vacio");
-        }catch (io.jsonwebtoken.security.SignatureException exception){
+        }catch (SignatureException exception){
             logger.error("Fallo con la firma");
         }
         return false;

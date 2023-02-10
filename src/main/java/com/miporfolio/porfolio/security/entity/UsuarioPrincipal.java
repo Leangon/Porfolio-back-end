@@ -7,15 +7,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.constraints.NotNull;
-
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 
 @Getter @Setter
 public class UsuarioPrincipal implements UserDetails{
@@ -30,30 +28,27 @@ public class UsuarioPrincipal implements UserDetails{
     @NotNull
     private String password;
     
-    private Collection<? extends GrantedAuthority> authoritys;
-    
-     public UsuarioPrincipal() {
-    }
+    private Collection<? extends GrantedAuthority> authorities;
 
-    public UsuarioPrincipal(String userName, String email, String password, Collection<? extends GrantedAuthority> authoritys) {
+    public UsuarioPrincipal(String userName, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.userName = userName;
         this.email = email;
         this.password = password;
-        this.authoritys = authoritys;
+        this.authorities = authorities;
     }
     
     public static UsuarioPrincipal build(Usuario usuario){
-        List<GrantedAuthority> authoritys = 
+        List<GrantedAuthority> authorities =
                 usuario.getRoles()
                         .stream()
                         .map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name()))
                         .collect(Collectors.toList());
-        return new UsuarioPrincipal(usuario.getUserName(), usuario.getEmail(), usuario.getPassword(), authoritys);
+        return new UsuarioPrincipal(usuario.getUserName(), usuario.getEmail(), usuario.getPassword(), authorities);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authoritys;
+        return authorities;
     }
 
     @Override
@@ -85,7 +80,5 @@ public class UsuarioPrincipal implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
-
-   
     
 }

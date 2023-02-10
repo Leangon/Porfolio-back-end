@@ -13,10 +13,12 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import java.util.HashSet;
 import java.util.Set;
-import javax.validation.constraints.NotNull;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
 
 @Getter @Setter
 @Entity
@@ -24,11 +26,13 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
+    @NotBlank
     @NotNull
     @Column(name = "user_name", unique = true)
     private String userName;
-    
+
+    @Email
     @NotNull
     @Column(unique = true)
     private String email;
@@ -52,7 +56,5 @@ public class Usuario {
         this.userName = userName;
         this.email = email;
         this.password = password;
-    }    
-    
+    }
 }
-

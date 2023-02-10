@@ -12,7 +12,8 @@ import com.miporfolio.porfolio.security.service.RolService;
 import com.miporfolio.porfolio.security.service.UsuarioService;
 import java.util.HashSet;
 import java.util.Set;
-import javax.validation.Valid;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,15 +51,15 @@ public class AuthController {
     JwtProvider jwtProvider;
     
     @PostMapping("/nuevo")
-    public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
+    public ResponseEntity<NuevoUsuario> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
         if (bindingResult.hasErrors()) 
             return new ResponseEntity(new Mensaje("Campos mal puestos o email invalido"), HttpStatus.BAD_REQUEST);
-        if (usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
+        if (usuarioService.existsByNombreUsuario(nuevoUsuario.getUserName()))
             return new ResponseEntity(new Mensaje("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
         if (usuarioService.existsByEmail(nuevoUsuario.getEmail()))
             return new ResponseEntity(new Mensaje("Ese email ya existe"), HttpStatus.BAD_REQUEST);
         Usuario usuario = 
-                new Usuario(nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),
+                new Usuario(nuevoUsuario.getUserName(), nuevoUsuario.getEmail(),
         passwordEncoder.encode(nuevoUsuario.getPassword()));
         Set<Rol> roles = new HashSet<>();
         roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
@@ -66,7 +67,7 @@ public class AuthController {
         if (nuevoUsuario.getRoles().contains("admin"));
             roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
             usuario.setRoles(roles);
-            usuarioService.createUser(usuario);
+            usuarioService.save(usuario);
         return new ResponseEntity(new Mensaje("Usuario guardado"), HttpStatus.BAD_REQUEST);
     }
     @PostMapping("/login")

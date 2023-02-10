@@ -10,27 +10,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class UsuarioService {
-    
+
     @Autowired
     UsuarioRepository usuarioRepository;
-    
+
     public Optional<Usuario> getByNombreUsuario(String userName) {
-        return usuarioRepository.finByNombreUsuario(userName);
+        return usuarioRepository.findByUserName(userName);
     }
-    
+
     public boolean existsByNombreUsuario(String userName) {
-        return usuarioRepository.existsByNombreUsuario(userName);
+        return usuarioRepository.existsByUserName(userName);
     }
-    
+
     public Optional<Usuario> getByEmail(String email){
-        return usuarioRepository.finByEmail(email);
+        return usuarioRepository.findByEmail(email);
     }
-    
-     public boolean existsByEmail(String nombreEmail) {
+
+    public boolean existsByEmail(String nombreEmail) {
         return usuarioRepository.existsByEmail(nombreEmail);
     }
-     
-     public void createUser(Usuario usuario){
-         usuarioRepository.save(usuario);
-     }
+
+    public void save(Usuario usuario){
+        usuarioRepository.save(usuario);
+    }
 }
