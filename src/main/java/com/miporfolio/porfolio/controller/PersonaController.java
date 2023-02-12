@@ -4,34 +4,30 @@ import com.miporfolio.porfolio.model.Persona;
 import com.miporfolio.porfolio.service.IPersonaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/persona")
 @CrossOrigin(origins = "*")
 public class PersonaController {
     
     @Autowired
     private IPersonaService persoServ;
     
-    @PostMapping ("/new/persona")
+    @PostMapping ("/new")
     public void agregarPersona (@RequestBody Persona pers){
         persoServ.crearPersona(pers);
     }
-    
-    @GetMapping ("/ver/personas")
+
+    @PreAuthorize("hasrole('ADMIN')")
+    @GetMapping ("/verlistapersonas")
     @ResponseBody
-    public List<Persona> verPersonas (){
+    public List<Persona> verPersonas(){
         return persoServ.verPersonas();
     }
-    
+
+    @PreAuthorize("hasrole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public void borrarPersona(@PathVariable Long id){
         persoServ.borrarPersona(id);
@@ -42,7 +38,8 @@ public class PersonaController {
     public Persona buscarPersona(@PathVariable Long id){
         return persoServ.buscarPersona(id);
     }
-    
+
+    @PreAuthorize("hasrole('ADMIN')")
     @PutMapping ("/actualizar")
     public void actualizarPersona(@RequestBody Persona pers){
         persoServ.actualizarPersona(pers);

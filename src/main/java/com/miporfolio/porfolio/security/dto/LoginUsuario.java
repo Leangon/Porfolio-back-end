@@ -13,4 +13,5 @@ public class LoginUsuario {
    
     @NotBlank
     private String password;
+
 }

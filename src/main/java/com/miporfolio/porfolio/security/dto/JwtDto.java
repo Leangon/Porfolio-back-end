@@ -18,6 +18,4 @@ public class JwtDto {
         this.email = email;
         this.authorities = authorities;
     }
-    
-    
 }

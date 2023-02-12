@@ -4,6 +4,8 @@ import com.miporfolio.porfolio.security.entity.UsuarioPrincipal;
 import io.jsonwebtoken.*;
 
 import java.util.Date;
+
+import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +28,7 @@ public class JwtProvider {
     // Acá se genera el token
     public String genereteToken(Authentication authentication){
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
-        return Jwts.builder().setSubject(usuarioPrincipal.getEmail())
+        return Jwts.builder().setSubject(usuarioPrincipal.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret)
