@@ -3,42 +3,57 @@ package com.miporfolio.porfolio.service;
 import com.miporfolio.porfolio.model.Persona;
 import com.miporfolio.porfolio.repository.PersonaRepository;
 import java.util.List;
+import java.util.Optional;
+
+import com.miporfolio.porfolio.service.impl.IPersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class PersonaService implements IPersonaService{
+public class PersonaService implements IPersonaService {
 
     @Autowired
-    public PersonaRepository persoRepo;
+    public PersonaRepository personaRepository;
     
     @Override
     public List<Persona> verPersonas() {
-        return persoRepo.findAll(); 
+
+        return personaRepository.findAll();
     }
 
     @Override
-    public void crearPersona(Persona pers) {
-        persoRepo.save(pers);
+    public void savePersona(Persona pers) {
+
+        personaRepository.save(pers);
     }
 
     @Override
-    public void borrarPersona(Long id) {
-        persoRepo.deleteById(id);
+    public void deletePersona(int id) {
+
+        personaRepository.deleteById(id);
     }
 
     @Override
-    public Persona buscarPersona(Long id) {
-        return persoRepo.findById(id).orElse(null);
+    public Persona findByIdPersona(int id) {
+
+        return personaRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void actualizarPersona(Persona pers) {
-        persoRepo.save(pers);
+    public boolean existsByIdPersona(int id) {
+        return personaRepository.existsById(id);
     }
-    
-    
-    
+
+    @Override
+    public Optional<Persona> findByNamePersona(String name) {
+        return personaRepository.findByName(name);
+    }
+
+    @Override
+    public boolean existsNamePersona(String name) {
+        return personaRepository.existsByName(name);
+    }
+
 }

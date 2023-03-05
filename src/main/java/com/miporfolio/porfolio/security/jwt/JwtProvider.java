@@ -35,7 +35,7 @@ public class JwtProvider {
                 .compact();
     }
     
-    public String getEmailFromToken(String token){
+    public String getNombreUsusarioFromToken(String token){
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
     
