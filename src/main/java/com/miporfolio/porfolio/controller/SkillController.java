@@ -52,7 +52,7 @@ public class SkillController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/skillUpdate/{id}")
-    public ResponseEntity <Skill> updateSkill(@Valid @RequestBody Skill skill, @PathVariable Long id) {
+    public ResponseEntity <Skill> updateSkill(@Valid @PathVariable Long id, @RequestBody Skill skill) {
         Optional<Persona> personaOptional = Optional.ofNullable(personaService.findByIdPersona(skill.getPersona().getId()));
 
         if (personaOptional.isEmpty()){

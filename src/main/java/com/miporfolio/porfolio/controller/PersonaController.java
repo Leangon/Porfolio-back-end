@@ -44,7 +44,7 @@ public class PersonaController {
         personaService.deletePersona(id);
     }
     
-    @GetMapping ("/personaBuscar/{id}")
+    @GetMapping ("/personaFind/{id}")
     @ResponseBody
     public Persona buscarPersona(@PathVariable int id){
 
@@ -52,13 +52,13 @@ public class PersonaController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping ("/personaActualizar/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") int id, @Valid @RequestBody Persona persona){
+    @PutMapping ("/personUpdate/{id}")
+    public ResponseEntity<?> update(@Valid @PathVariable int id, @RequestBody Persona persona){
         if (!personaService.existsByIdPersona(id)){
             return new ResponseEntity<>(new Mensaje("No existe el ID"), HttpStatus.BAD_REQUEST);
         }
-        if (StringUtils.isBlank(persona.getName())){
-            return new ResponseEntity<>(new Mensaje("El nombre no puede estar vacio"), HttpStatus.BAD_REQUEST);
+        if (StringUtils.isBlank(persona.getTitle())){
+            return new ResponseEntity<>(new Mensaje("El titulo no puede estar vacio"), HttpStatus.BAD_REQUEST);
         }
 
         Optional<Persona> personaOptional = Optional.ofNullable(personaService.findByIdPersona(id));
@@ -68,6 +68,9 @@ public class PersonaController {
         }
 
         persona.setId(personaOptional.get().getId());
+        persona.setEmail(personaOptional.get().getEmail());
+        persona.setName(personaOptional.get().getName());
+        persona.setPhoneNumber(personaOptional.get().getPhoneNumber());
         personaService.savePersona(persona);
 
         return new ResponseEntity<>(new Mensaje("Persona actualizada"), HttpStatus.OK);

@@ -47,13 +47,13 @@ public class PersonaService implements IPersonaService {
     }
 
     @Override
-    public Optional<Persona> findByNamePersona(String name) {
-        return personaRepository.findByName(name);
+    public Optional<Persona> findByNamePersona(String fullName) {
+        return personaRepository.findByName(fullName);
     }
 
     @Override
-    public boolean existsNamePersona(String name) {
-        return personaRepository.existsByName(name);
+    public boolean existsNamePersona(String fullName) {
+        return personaRepository.existsByName(fullName);
     }
 
 }

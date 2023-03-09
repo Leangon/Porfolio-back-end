@@ -36,10 +36,6 @@ public class Persona {
     private String urlImage;
 
     @NotNull
-    @Column(name = "date_birth")
-    private String dateBirth;
-
-    @NotNull
     @Column (name = "phone_num")
     private String phoneNumber;
 
@@ -60,16 +56,10 @@ public class Persona {
 
     public Persona() {}
 
-    public Persona(int id, String name, String title, String description, String urlImage, String dateBirth,
-                   String phoneNumber, String email, String aboutMe) {
-        this.id = id;
-        this.name = name;
+    public Persona(String title, String description, String urlImage, String aboutMe) {
         this.title = title;
         this.description = description;
         this.urlImage = urlImage;
-        this.dateBirth = dateBirth;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
         this.aboutMe = aboutMe;
     }
 
