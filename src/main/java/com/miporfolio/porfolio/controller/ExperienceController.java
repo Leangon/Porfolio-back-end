@@ -7,6 +7,7 @@ import com.miporfolio.porfolio.service.impl.IPersonaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +47,7 @@ public class ExperienceController {
         return experienceService.findExperience(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/experienceUpdate/{id}")
     public ResponseEntity<Experience> updateExperience(@Valid @PathVariable int id, @RequestBody Experience experience){
         Optional<Persona> personaOptional = Optional.ofNullable(personaService.findByIdPersona(experience.getPersona().getId()));

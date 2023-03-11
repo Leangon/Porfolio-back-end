@@ -9,44 +9,40 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 @Entity
-public class Experience {
+public class Education {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
-    private String company;
+    private String university;
 
     @NotNull
-    private String position;
-
-    @NotNull
-    private String description;
-
-    @NotNull
-    private String startDate;
-
-    @NotNull
-    private String endDate;
+    private String title;
 
     @NotNull
     @Column(name = "url_logo")
     private String urlLogo;
 
+    @NotNull
+    @Column(name = "start_date")
+    private String startDate;
+
+    @NotNull
+    @Column(name = "end_date")
+    private String endDate;
+
     @ManyToOne(optional = false)
-    @JoinColumn(name = "persona_id")
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JoinColumn(name = "person_id")
     private Persona persona;
 
-    public Experience(String company, String position, String description, String startDate, String endDate, String urlLogo, Persona persona) {
-        this.company = company;
-        this.position = position;
-        this.description = description;
+    public Education(String university, String title, String urlLogo, String startDate, String endDate, Persona persona) {
+        this.university = university;
+        this.title = title;
+        this.urlLogo = urlLogo;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.urlLogo = urlLogo;
         this.persona = persona;
-
     }
 }

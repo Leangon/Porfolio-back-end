@@ -57,6 +57,10 @@ public class Persona {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Experience> experiences = new HashSet<>();
 
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Education> educations = new HashSet<>();
+
     public Persona() {}
 
     public Persona(String title, String description, String urlImage, String aboutMe) {
