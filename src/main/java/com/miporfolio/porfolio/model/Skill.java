@@ -19,7 +19,7 @@ public class Skill {
     private String name;
 
     @NotNull
-    @Column(name = "url_image", length = 500)
+    @Column(name = "url_image")
     private String urlImage;
 
     @NotNull

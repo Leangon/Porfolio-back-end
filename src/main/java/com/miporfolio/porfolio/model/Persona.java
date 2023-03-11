@@ -24,15 +24,14 @@ public class Persona {
     private String name;
 
     @NotNull
-    @Column(length = 500)
     private String title;
 
     @NotNull
-    @Column(length = 600)
+    @Column(length = 350)
     private String description;
 
     @NotNull
-    @Column(name = "url_image", length = 600)
+    @Column(name = "url_image")
     private String urlImage;
 
     @NotNull
@@ -53,6 +52,10 @@ public class Persona {
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Skill> skills = new HashSet<>();
+
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Experience> experiences = new HashSet<>();
 
     public Persona() {}
 

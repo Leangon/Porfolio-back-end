@@ -34,12 +34,14 @@ public class SkillController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/skillDelete/{id}")
     public void deleteSkill(@PathVariable Long id){
+
         skillService.deleteSkill(id);
     }
 
     @GetMapping("/skillVerLista")
     @ResponseBody
     public List<Skill> showSkills(){
+
         return skillService.showSkills();
     }
 
