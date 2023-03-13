@@ -15,8 +15,7 @@ import java.util.Set;
 public class Persona {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persona_generator")
-    @SequenceGenerator(name = "persona_generator", sequenceName = "persona_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
