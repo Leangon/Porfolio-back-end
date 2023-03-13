@@ -32,7 +32,7 @@ public class EducationController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("educationDelete/{id}")
+    @DeleteMapping("/educationDelete/{id}")
     public void deleteEducation(@PathVariable int id){
         educationService.deleteEducation(id);
     }
@@ -42,7 +42,7 @@ public class EducationController {
         return educationService.listEducation();
     }
 
-    @GetMapping("educationFind/{id}")
+    @GetMapping("/educationFind/{id}")
     public Optional<Education> findEducation(@PathVariable int id){
         return educationService.findExperience(id);
     }
