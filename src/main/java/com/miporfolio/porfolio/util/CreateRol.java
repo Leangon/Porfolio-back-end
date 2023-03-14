@@ -1,4 +1,4 @@
-package com.miporfolio.porfolio.util;
+/*package com.miporfolio.porfolio.util;
 
 import com.miporfolio.porfolio.security.entity.Rol;
 import com.miporfolio.porfolio.security.enums.RolNombre;
@@ -22,4 +22,4 @@ public class CreateRol implements CommandLineRunner {
         rolService.rolSave(rolUser);
 
     }
-}
+}*/

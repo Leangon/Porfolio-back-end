@@ -23,18 +23,19 @@ public class PersonaController {
     @Autowired
     private IPersonaService personaService;
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping ("/personaNew")
-    public void savePersona (@RequestBody Persona pers){
+    public ResponseEntity<?> savePersona (@RequestBody Persona pers){
 
         personaService.savePersona(pers);
+        return new ResponseEntity(new Mensaje("Persona creada"), HttpStatus.OK);
     }
 
     @GetMapping ("/personaVerLista")
     @ResponseBody
     public ResponseEntity<List<Persona>> verPersonas(){
         List<Persona> listPersona = personaService.verPersonas();
-        return new ResponseEntity<>(listPersona, HttpStatus.OK);
+        return new ResponseEntity<List<Persona>>(listPersona, HttpStatus.OK);
     }
 
     /*@PreAuthorize("hasRole('ADMIN')")
@@ -46,16 +47,19 @@ public class PersonaController {
     
     @GetMapping ("/personaFind/{id}")
     @ResponseBody
-    public Persona buscarPersona(@PathVariable int id){
+    public ResponseEntity<Persona> buscarPersona(@PathVariable int id){
+        if (!personaService.existsByIdPersona(id))
+            return new ResponseEntity(new Mensaje("No existe la person"), HttpStatus.NOT_FOUND);
 
-        return personaService.findByIdPersona(id);
+        Persona persona = personaService.findByIdPersona(id);
+        return new ResponseEntity<>(persona, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping ("/personUpdate/{id}")
     public ResponseEntity<?> update(@Valid @PathVariable int id, @RequestBody Persona persona){
         if (!personaService.existsByIdPersona(id)){
-            return new ResponseEntity<>(new Mensaje("No existe el ID"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("No existe el ID"), HttpStatus.NOT_FOUND);
         }
         if (StringUtils.isBlank(persona.getTitle())){
             return new ResponseEntity<>(new Mensaje("El titulo no puede estar vacio"), HttpStatus.BAD_REQUEST);

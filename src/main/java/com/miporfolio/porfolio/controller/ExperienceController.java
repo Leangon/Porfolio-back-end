@@ -1,11 +1,13 @@
 package com.miporfolio.porfolio.controller;
 
+import com.miporfolio.porfolio.dto.Mensaje;
 import com.miporfolio.porfolio.model.Experience;
 import com.miporfolio.porfolio.model.Persona;
 import com.miporfolio.porfolio.service.impl.IExperienceService;
 import com.miporfolio.porfolio.service.impl.IPersonaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,39 +29,46 @@ public class ExperienceController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/experienceNew")
-    public void saveExperience(@RequestBody Experience experience){
+    public ResponseEntity<?> saveExperience(@RequestBody Experience experience){
+
         experienceService.saveExperience(experience);
+        return new ResponseEntity<>(new Mensaje("Experiencia creada"), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/experienceDelete/{id}")
-    public void deleteExperience(@PathVariable int id){
+    public ResponseEntity<?> deleteExperience(@PathVariable int id){
+
         experienceService.deleteExperience(id);
+        return new ResponseEntity<>(new Mensaje("Experience eliminada"), HttpStatus.OK);
     }
 
     @GetMapping("/experienceList")
-    public List<Experience> listExperience(){
-        return experienceService.listExperience();
+    public ResponseEntity<List<Experience>> listExperience(){
+
+        List<Experience> experiences = experienceService.listExperience();
+        return new ResponseEntity<>(experiences, HttpStatus.OK);
     }
 
     @GetMapping("/experienceFind/{id}")
-    public Optional<Experience> findExperience(@PathVariable int id){
-        return experienceService.findExperience(id);
+    public ResponseEntity<Optional<Experience>> findExperience(@PathVariable int id){
+        Optional<Experience> experience = experienceService.findExperience(id);
+        return new ResponseEntity<>(experience, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/experienceUpdate/{id}")
-    public ResponseEntity<Experience> updateExperience(@Valid @PathVariable int id, @RequestBody Experience experience){
+    public ResponseEntity<?> updateExperience(@Valid @PathVariable int id, @RequestBody Experience experience){
         Optional<Persona> personaOptional = Optional.ofNullable(personaService.findByIdPersona(experience.getPersona().getId()));
 
         if (personaOptional.isEmpty()){
-            return ResponseEntity.unprocessableEntity().build();
+            return new ResponseEntity<>(new Mensaje("No existe la persona asociada a la experience"), HttpStatus.BAD_REQUEST);
         }
 
         Optional<Experience> experienceOptional = (experienceService.findExperience(id));
 
         if (experienceOptional.isEmpty()){
-            return ResponseEntity.unprocessableEntity().build();
+            return new ResponseEntity<>(new Mensaje("Experience que intenta modificar no encontrada"), HttpStatus.BAD_REQUEST);
         }
 
         experience.setId(experienceOptional.get().getId());
@@ -67,6 +76,6 @@ public class ExperienceController {
 
         experienceService.saveExperience(experience);
 
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(new Mensaje("Experience actualizada"), HttpStatus.OK);
     }
 }
