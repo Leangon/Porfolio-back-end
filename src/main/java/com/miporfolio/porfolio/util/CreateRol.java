@@ -1,4 +1,4 @@
-/*package com.miporfolio.porfolio.util;
+package com.miporfolio.porfolio.util;
 
 import com.miporfolio.porfolio.security.entity.Rol;
 import com.miporfolio.porfolio.security.enums.RolNombre;
@@ -16,8 +16,10 @@ public class CreateRol implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        Rol rolAdmin = new Rol(RolNombre.ROLE_ADMIN);
         Rol rolUser = new Rol(RolNombre.ROLE_USER);
+        rolService.rolSave(rolAdmin);
         rolService.rolSave(rolUser);
+
     }
 }
-*/

@@ -23,7 +23,7 @@ public class PersonaController {
     @Autowired
     private IPersonaService personaService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping ("/personaNew")
     public void savePersona (@RequestBody Persona pers){
 
@@ -37,12 +37,12 @@ public class PersonaController {
         return new ResponseEntity<>(listPersona, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    /*@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/personaDelete/{id}")
     public void borrarPersona(@PathVariable int id){
 
         personaService.deletePersona(id);
-    }
+    }*/
     
     @GetMapping ("/personaFind/{id}")
     @ResponseBody
@@ -64,7 +64,7 @@ public class PersonaController {
         Optional<Persona> personaOptional = Optional.ofNullable(personaService.findByIdPersona(id));
 
         if (personaOptional.isEmpty()){
-            return ResponseEntity.unprocessableEntity().build();
+            return new ResponseEntity<>(new Mensaje("No existe la persona"), HttpStatus.BAD_REQUEST);
         }
 
         persona.setId(personaOptional.get().getId());
@@ -73,7 +73,7 @@ public class PersonaController {
         persona.setPhoneNumber(personaOptional.get().getPhoneNumber());
         personaService.savePersona(persona);
 
-        return new ResponseEntity<>(new Mensaje("Persona actualizada"), HttpStatus.OK);
+        return new ResponseEntity<>(new Mensaje("Person actualize!"), HttpStatus.OK);
     }
     
 }

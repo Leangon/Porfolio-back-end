@@ -44,7 +44,7 @@ public class MainSecurity{
         http.cors().and().csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**", "/api/personaVerLista", "/api/skillVerLista",
-                        "/api/experienceList", "/api/educationList", "/api/proyectsList")
+                        "/api/experienceList", "/api/educationList", "/api/proyectsList", "/api/personaNew")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

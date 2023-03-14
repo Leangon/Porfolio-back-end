@@ -66,11 +66,13 @@ public class Persona {
 
     public Persona() {}
 
-    public Persona(String title, String description, String urlImage, String aboutMe) {
+    public Persona(String name, String title, String description, String urlImage, String phoneNumber, String email, String aboutMe) {
+        this.name = name;
         this.title = title;
         this.description = description;
         this.urlImage = urlImage;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
         this.aboutMe = aboutMe;
     }
-
 }
