@@ -15,6 +15,9 @@ public class Experience {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "orden")
+    private int orden;
+
     @NotNull
     private String company;
 

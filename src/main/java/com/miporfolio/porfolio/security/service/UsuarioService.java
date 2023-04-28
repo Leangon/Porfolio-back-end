@@ -20,6 +20,7 @@ public class UsuarioService {
     }
 
     public Optional<Usuario> getByEmail(String email){
+
         return usuarioRepository.findByEmail(email);
     }
 
@@ -29,6 +30,7 @@ public class UsuarioService {
     }
 
     public void save(Usuario usuario){
+
         usuarioRepository.save(usuario);
     }
 }
