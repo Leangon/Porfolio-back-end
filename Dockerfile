@@ -1,6 +1,6 @@
 FROM amazoncorretto:17
 
-MAINTAINER LEANDRO
+MAINTAINER leandro
 
 COPY target/porfolio.jar porfolio.jar
 
