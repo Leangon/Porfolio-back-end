@@ -1,4 +1,5 @@
-FROM amazoncorretto:17-alpine-jdk
+FROM amazoncorretto:17
 MAINTAINER LEA
-COPY target/porfolio.jar porfolio.jar
-ENTRYPOINT ["java","-jar","/porfolio.jar"]
+EXPOSE 8080
+COPY target/porfolio.jar porfolioApp.jar
+ENTRYPOINT ["java","-jar","/porfolioApp.jar"]
