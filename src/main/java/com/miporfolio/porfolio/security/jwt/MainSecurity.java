@@ -43,8 +43,18 @@ public class MainSecurity{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**", "/api/personaVerLista", "/api/skillVerLista",
-                        "/api/experienceList", "/api/educationList", "/api/proyectsList")
+                .requestMatchers("/api/auth/**",
+                        "/api/personaVerLista",
+                        "/api/skillVerLista",
+                        "/api/experienceList",
+                        "/api/educationList",
+                        "/api/proyectsList",
+                        "/v3/api-docs/**",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui/**",
+                        "/webjars/**", "**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
