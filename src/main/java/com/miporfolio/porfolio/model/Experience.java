@@ -16,7 +16,8 @@ public class Experience {
     private int id;
 
     @Column(name = "orden")
-    private int orden;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer orden;
 
     @NotNull
     private String company;
@@ -42,7 +43,8 @@ public class Experience {
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Persona persona;
 
-    public Experience(String company, String position, String description, String startDate, String endDate, String urlLogo, Persona persona) {
+    public Experience(Integer orden, String company, String position, String description, String startDate, String endDate, String urlLogo, Persona persona) {
+        this.orden = orden;
         this.company = company;
         this.position = position;
         this.description = description;
