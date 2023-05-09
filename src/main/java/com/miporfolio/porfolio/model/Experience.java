@@ -16,7 +16,7 @@ public class Experience {
     private int id;
 
     @Column(name = "orden")
-    private int orden;
+    private Integer orden;
 
     @NotNull
     private String company;
